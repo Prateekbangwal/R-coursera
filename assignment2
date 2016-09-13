@@ -1,0 +1,34 @@
+## Two functions are created in order to first create a "special" matrix
+## then cache the result. The second function checks to see if the matrix was created.
+## If it was cached it returns the invserse, if not it calculates the inverse 
+
+
+## This function created a "special" matrix.
+makeCacheMatrix <- function(x = matrix()) {
+  m <- NULL
+  set <- function (y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setinverse <- function (solve) m <<- solve
+  getinverse <- function () m 
+  list(set = set, get = get)
+  setinverse = setinverse
+  getinverse = getinverse
+}
+
+## This function calculates the inverse of a the "special" matrix that was created above.
+## First the function checks to see if the inverse is already calculated, if so it gets the inverse from the cache.
+## Otherwise, the inverse is calculated stored in the cache. 
+cacheSolve <- function(x, ...) {
+  m <- x$getinverse()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get()
+  m <- solve(data, ...)
+  x$setinverse(m)
+  m
+}
